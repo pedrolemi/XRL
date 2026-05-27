@@ -1,0 +1,10 @@
+stable-baselines3>=2.0.0
+gymnasium[box2d,classic-control]>=1.2.3
+torch>=2.0.0
+numpy>=2.0.0
+tensorboard>=2.0.0
+ipykernel>=6.29.0
+matplotlib>=3.8.0
+opencv-python>=4.8.0
+shap>=0.44.0
+pygame-ce>=2.5.0
