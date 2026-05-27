@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from matplotlib import animation
+import numpy as np
 
 def show_animation(frames: list):
     fig, ax = plt.subplots(figsize=(6, 4))
@@ -110,3 +111,28 @@ def show_animation_with_decision_path(frames: list, explanations: list):
     ani = animation.FuncAnimation(fig, _update, frames=len(frames), interval=50, blit=False)
     plt.close()
     return ani
+
+def plot_correlation_matrix(X, feature_names: list[str]):
+    corr = np.corrcoef(X, rowvar=False)
+    n = corr.shape[0]
+
+    if feature_names is None:
+        feature_names = [f"f{i}" for i in range(n)]
+
+    fig, ax = plt.subplots(figsize=(8, 6))
+
+    im = ax.imshow(corr, cmap="coolwarm", vmin=-1, vmax=1)
+    plt.colorbar(im, ax=ax)
+
+    for i in range(n):
+        for j in range(n):
+            ax.text(j, i, f"{corr[i,j]:.2f}", ha="center", va="center",
+                    fontsize=8, color="white" if abs(corr[i,j]) > 0.5 else "black")
+
+    ax.set_xticks(range(n))
+    ax.set_yticks(range(n))
+    ax.set_xticklabels(feature_names, rotation=45, ha="right")
+    ax.set_yticklabels(feature_names)
+
+    plt.tight_layout()
+    plt.show()
