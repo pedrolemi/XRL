@@ -76,6 +76,18 @@ class DQNAgent:
             self.policy_net.parameters(),
             lr=lr
         )
+
+    def predict(self, state: np.ndarray) -> np.ndarray:
+        state_t = torch.tensor(
+            state,
+            dtype=torch.float32,
+            device=self.device
+        ).unsqueeze(0)
+
+        with torch.no_grad():
+            q_values = self.policy_net(state_t).cpu().numpy()[0]
+
+        return q_values
     
     def epsilon_greedy(self, state: np.ndarray, epsilon: float):
         if np.random.random() < epsilon:
