@@ -13,7 +13,7 @@ def show_animation(frames: list):
 
     ani = animation.FuncAnimation(fig, update, frames=len(frames), interval=30, blit=True)
     plt.close()
-    HTML(ani.to_jshtml())
+    return ani
 
 
 def draw_rules(ax, exp, step):
