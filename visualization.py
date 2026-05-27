@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-from IPython.display import HTML
 from matplotlib import animation
 
 def show_animation(frames: list):
