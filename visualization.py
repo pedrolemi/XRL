@@ -45,6 +45,12 @@ def draw_rules(ax, exp, step):
 
     ax.text(0.05, 0.69, "Rama del árbol surrogado",
             fontsize=7, color="#546e7a", fontfamily="monospace", va="top")
+    
+    gini = exp.get("gini", None)
+    if gini is not None:
+        gini_color = "#66bb6a" if gini < 0.1 else "#ffe082" if gini < 0.3 else "#ef5350"
+        ax.text(0.75, 0.72, f"gini {gini:.3f}", fontsize=7.5, fontweight="bold",
+                color=gini_color, fontfamily="monospace", va="top")
 
     # Reglas
     y = 0.61
@@ -65,6 +71,18 @@ def draw_rules(ax, exp, step):
         y -= 0.09
         if y < 0.05:
             break
+
+    match = exp.get("match", True)
+    badge_color  = "#66bb6a" if match else "#ef5350"
+    badge_symbol = "✓ fiel" if match else "✗ difiere"
+
+    ax.text(0.75, 0.79, badge_symbol, fontsize=8, fontweight="bold",
+            color=badge_color, fontfamily="monospace", va="top")
+
+    # Si difiere, muestra qué dijo el árbol
+    if not match:
+        ax.text(0.05, 0.72, f"árbol → {exp['action_tree']}", fontsize=7.5,
+                color=badge_color, fontfamily="monospace", va="top")
 
     # Nota pie
     ax.text(0.05, 0.04, "surrogate local · DQN CartPole-v1",
